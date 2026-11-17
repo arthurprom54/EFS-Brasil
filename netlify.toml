@@ -1,0 +1,7 @@
+[build]
+  command = "node build.mjs --site-url=$URL"
+  publish = "site"
+[functions]
+  directory = "netlify/functions"
+[build.environment]
+  NODE_VERSION = "20"

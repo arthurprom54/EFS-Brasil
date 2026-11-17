@@ -1,0 +1,21 @@
+# HTTPS automático (Let's Encrypt) com Caddy. Troque pelo seu domínio.
+www.SEU-DOMINIO.com.br {
+	root * /var/www/efs-brasil/site
+	encode zstd gzip
+	@api path /api/*
+	reverse_proxy @api 127.0.0.1:8080
+	file_server
+	handle_errors {
+		rewrite * /404.html
+		file_server
+	}
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options nosniff
+		X-Frame-Options DENY
+		Referrer-Policy strict-origin-when-cross-origin
+	}
+}
+SEU-DOMINIO.com.br {
+	redir https://www.SEU-DOMINIO.com.br{uri} permanent
+}
